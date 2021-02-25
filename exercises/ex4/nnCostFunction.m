@@ -71,8 +71,9 @@ for i=1:m,
 end
 
 J = sum(sum(-1 * y_label .* log(h2') - (1 - y_label) .* log(1 - h2'))) / m;
-
-
+T1 = Theta1(:,2:size(Theta1,2));
+T2 = Theta2(:,2:size(Theta2,2));
+J = J + ((sum(sum(T1.^2)) + sum(sum(T2.^2))) * lambda / (2 * m))
 
 
 
