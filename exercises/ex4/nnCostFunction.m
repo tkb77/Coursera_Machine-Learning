@@ -75,20 +75,30 @@ T1 = Theta1(:,2:size(Theta1,2));
 T2 = Theta2(:,2:size(Theta2,2));
 J = J + ((sum(sum(T1.^2)) + sum(sum(T2.^2))) * lambda / (2 * m))
 
+for t=1:m
+	a1 = [1 X(t,:)];
+	z2 = Theta1 * a1';
+	a2 = sigmoid(z2);
+  
+  a2 = [1 a2'];
+	z3 = Theta2 * a2';
+	a3 = sigmoid(z3);
+  
+	delta_3 = a3 - y_label(:,t);
+  
+  z2 = [1 z2'];
+  delta_2 = (Theta2' * delta_3) .* sigmoidGradient(z2');
 
+	Theta2_grad = Theta2_grad + delta_3 * a2;
+	Theta1_grad = Theta1_grad + delta_2(2:end) * a1;
 
+end;
 
+Theta2_grad = (1/m) * Theta2_grad;
+Theta1_grad = (1/m) * Theta1_grad;
 
-
-
-
-
-
-
-
-
-
-
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + ((lambda/m) * Theta1(:, 2:end));
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + ((lambda/m) * Theta2(:, 2:end));
 
 % -------------------------------------------------------------
 
