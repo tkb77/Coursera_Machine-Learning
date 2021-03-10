@@ -17,7 +17,7 @@ sim = 0;
 %
 
 
-J = sum((X * theta - y).^2) / (2 * m) + lambda / (2 * m) * sum(temp .^ 2);
+sim = exp(-1 * sum((x1 .- x2).^2) / (2 * sigma^2));
 
 
 
