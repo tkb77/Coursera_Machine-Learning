@@ -23,11 +23,22 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+results = eye(64,3);
+i = 0;
 
+for C_ = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]
+  for sigma_ = [0.01, 0.03, 0.1, 0.3 1, 3, 10, 30]
+    i = i + 1;
+    model = svmTrain(X, y, C_, @(x1, x2) gaussianKernel(x1, x2, sigma_));
+    predictions = svmPredict(model, Xval);
+    prediction_error = mean(double(predictions ~= yval));
+    results(i,:) = [C_, sigma_, prediction_error];
+  end
+end
 
-
-
-
+sort = sortrows(results, 3);
+C = sort(1,1);
+sigma = sort(1,2);
 
 % =========================================================================
 
