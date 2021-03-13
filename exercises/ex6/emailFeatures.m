@@ -48,12 +48,12 @@ x = zeros(n, 1);
 %
 %
 
-
-
-
-
-
-
+for i = 1:length(x)
+  num_included_word = find(word_indices == i);
+  if num_included_word > 0
+    x(i) = 1;
+  end
+end
 
 % =========================================================================
     
